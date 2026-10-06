@@ -10,6 +10,8 @@ export function useSceneNavigation(targetRef, {
   wrapDuration = 850,
   swipeThreshold = 45,
 } = {}) {
+  //to remember current page without rerendering
+
   const progressRef = useRef(0)
 
   useEffect(() => {
@@ -31,7 +33,10 @@ export function useSceneNavigation(targetRef, {
 
     const renderProgress = (progress) => {
       progressRef.current = progress
+      //separat into two transition
+      //introProgress controls Page 1 → Page 2:
       const introProgress = Math.min(progress, 1)
+      //walkProgress controls Page 2 → Page 3:
       const walkProgress = Math.max(progress - 1, 0)
 
       targetElement.style.setProperty('--scroll-progress', introProgress.toFixed(4))
@@ -42,6 +47,7 @@ export function useSceneNavigation(targetRef, {
 
     renderProgress(progressRef.current)
 
+    // to smoothly move to next page
     const animateToScene = (targetScene, wraps = false) => {
       if (isAnimating || targetScene === progressRef.current) return
 
@@ -85,6 +91,7 @@ export function useSceneNavigation(targetRef, {
       animationFrame = requestAnimationFrame(animate)
     }
 
+    // decide direction
     const moveOnePage = (direction) => {
       if (isAnimating) return
 
