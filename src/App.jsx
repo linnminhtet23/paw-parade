@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { OutroScene } from './components/OutroScene'
 import { PortraitField } from './components/PortraitField'
 import { SceneNavigation } from './components/SceneNavigation'
@@ -8,10 +8,12 @@ import { usePageLoader } from './hooks/usePageLoader'
 import { useParallax } from './hooks/useParallax'
 import { useSceneNavigation } from './hooks/useSceneNavigation'
 import './App.css'
+import CollectionDrawer from './components/CollectionDrawer'
 
 function App() {
   const sceneRef = useRef(null)
   const loader = usePageLoader()
+  const [collectionOpen, setCollectionOpen]= useState(false)
 
   useParallax(sceneRef)
   useSceneNavigation(sceneRef)
@@ -27,6 +29,7 @@ function App() {
         <OutroScene />
         <SceneNavigation />
       </main>
+      {/* <CollectionDrawer collectionOpen={collectionOpen} onCollectionClose={(()=>setCollectionOpen(false))} /> */}
     </div>
   )
 }
